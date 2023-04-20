@@ -1,3 +1,11 @@
+const url = chrome.runtime.getURL("scripts/airports.json");
+var obj;
+fetch(url)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => obj = data);
+
 document.addEventListener("click", function(){
 
     var depiatas = findcitypairs("dep");
@@ -161,11 +169,3 @@ function findbookcodes(depiatas,arriatas,distances,tabindex){
         }
     });
 }
-
-const url = chrome.runtime.getURL("scripts/airports.json");
-var obj;
-fetch(url)
-    .then(response => {
-        return response.json();
-    })
-    .then(data => obj = data);
