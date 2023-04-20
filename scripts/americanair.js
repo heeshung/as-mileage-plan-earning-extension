@@ -27,7 +27,6 @@ document.addEventListener("click", function(){
 
     setTimeout(findbookcodes(depiatas,arriatas,distances,tabindex),2000);
 
-    //footerarea[0].innerHTML = "<div class="cell text-right"><button id="btn-close" class="button primary" value="Close">Close</button></div>JFK - SFO: 2500 miles"
 });
 
 function roundandmult(distance,multiplier){
@@ -164,4 +163,9 @@ function findbookcodes(depiatas,arriatas,distances,tabindex){
 }
 
 const url = chrome.runtime.getURL("scripts/airports.json");
-console.log(url);
+var obj;
+fetch(url)
+    .then(response => {
+        return response.json();
+    })
+    .then(data => obj = data);
