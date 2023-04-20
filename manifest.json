@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Alaska Airlines Mileage Plan Partner Earnings Chrome Extension",
+  "description": "Show expected EQM and RDM earnings on Alaska Airlines partner fares",
+  "version": "1.0",
+  "host_permissions": ["https://www.aa.com/*","https://aa.com/*"],
+  "content_scripts": [
+        {
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/americanair.js"],
+            "matches": [
+                "https://www.aa.com/*",
+                "https://aa.com/*"
+            ]
+        }
+    ]
+}
