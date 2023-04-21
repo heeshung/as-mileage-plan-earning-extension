@@ -197,7 +197,7 @@ function findbookcodes(depiatas,arriatas,distances){
     if (asteriskprinted == 0 && showasterisk == 1){
         var child = document.createElement("div");
         child.className = "asterisk";
-        child.innerHTML = "<br>*Flight not operated by Finnair";
+        child.innerHTML = "<br>*Flight number not eligible for AS earning";
         alldivs[panelend-1].appendChild(child);
     }
 }
