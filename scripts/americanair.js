@@ -8,33 +8,35 @@ fetch(url)
 
 document.addEventListener("click", function(){
 
-    var depiatas = findcitypairs("dep");
-    var arriatas = findcitypairs("arr");
+    setTimeout(() => {
 
-    var distances = []
-
-    for (let i=0; i<depiatas.length; i++){
-        var deplat = getairportcoord(depiatas[i],"lat");
-        var deplon = getairportcoord(depiatas[i],"lon");
-
-        var arrlat = getairportcoord(arriatas[i],"lat");
-        var arrlon = getairportcoord(arriatas[i],"lon");
-        distances.push(getDistanceFromLatLon(deplat,deplon,arrlat,arrlon));
-    }
-
-    try{
-        var activetab = document.getElementsByClassName("mat-tab-label-active");
-        var tabindex = (activetab[0].getAttribute("aria-posinset")-1);
-    }
-
-    catch{
-        var activetab = 1;
-        var tabindex = 1;
-    }
-    
-
-    setTimeout(findbookcodes(depiatas,arriatas,distances,tabindex),2000);
-
+        try{
+            var depiatas = findcitypairs("dep");
+            var arriatas = findcitypairs("arr");
+        
+            var distances = []
+        
+            for (let i=0; i<depiatas.length; i++){
+                var deplat = getairportcoord(depiatas[i],"lat");
+                var deplon = getairportcoord(depiatas[i],"lon");
+        
+                var arrlat = getairportcoord(arriatas[i],"lat");
+                var arrlon = getairportcoord(arriatas[i],"lon");
+                distances.push(getDistanceFromLatLon(deplat,deplon,arrlat,arrlon));
+            }
+        
+            var activetab = document.getElementsByClassName("mat-tab-label-active");
+            var tabindex = (activetab[0].getAttribute("aria-posinset")-1);
+        
+            var activetab = 1;
+            var tabindex = 1;            
+        
+            findbookcodes(depiatas,arriatas,distances,tabindex);
+        }
+        catch{
+            return 1;
+        }
+    },250);
 });
 
 function roundandmult(distance,multiplier){

@@ -31,7 +31,7 @@ document.addEventListener("mousedown", function(){
         catch{
             return 1;
         }
-    },250)
+    },250);
 });
 
 function roundandmult(distance,multiplier){
