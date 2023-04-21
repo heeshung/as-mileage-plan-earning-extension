@@ -8,7 +8,11 @@
         "resources": ["scripts/airports.json"],
         "matches": [
             "https://www.aa.com/*",
-            "https://aa.com/*"
+            "https://aa.com/*",
+            "https://www.britishairways.com/*",
+            "https://britishairways.com/*",
+            "https://www.finnair.com/*",
+            "https://finnair.com/*"
         ]
     }
   ],
@@ -19,6 +23,20 @@
             "matches": [
                 "https://www.aa.com/booking/*",
                 "https://aa.com/booking/*"
+            ]
+        },
+        {
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/britishair.js"],
+            "matches": [
+                "https://www.britishairways.com/travel/book/public/*",
+                "https://britishairways.com/travel/book/public/*"
+            ]
+        },
+        {
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/finnair.js"],
+            "matches": [
+                "https://www.finnair.com/us-en/booking/*",
+                "https://finnair.com/us-en/booking/*"
             ]
         }
     ]
