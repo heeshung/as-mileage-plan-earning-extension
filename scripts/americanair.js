@@ -28,12 +28,13 @@ document.addEventListener("click", function(){
             var activetab = document.getElementsByClassName("mat-tab-label-active");
             var tabindex = (activetab[0].getAttribute("aria-posinset")-1);
         
-            var activetab = 1;
-            var tabindex = 1;            
+            
         
             findbookcodes(depiatas,arriatas,distances,tabindex);
         }
         catch{
+            var activetab = 1;
+            var tabindex = 1;
             return 1;
         }
     },250);
@@ -57,7 +58,14 @@ function findcitypairs(deporarr){
             for (let i=0; i<citypair.length; i++){
                 deps.push(citypair[i].innerHTML.substring(0,3));
             }
-            return deps;
+            if (deps.length>0){
+                return deps;
+            }
+            else {
+                var citycodes = document.getElementsByClassName("city-code");
+                deps.push(citycodes[0].innerHTML);
+                return deps;
+            }
         }
         catch{
             return 1;
@@ -71,7 +79,14 @@ function findcitypairs(deporarr){
             for (let i=0; i<citypair.length; i++){
                 arrs.push(citypair[i].innerHTML.substring(6));
             }
-            return arrs;
+            if (arrs.length>0){
+                return arrs;
+            }
+            else {
+                var citycodes = document.getElementsByClassName("city-code");
+                arrs.push(citycodes[1].innerHTML);
+                return arrs;
+            }
         }
         catch{
             return 1;
