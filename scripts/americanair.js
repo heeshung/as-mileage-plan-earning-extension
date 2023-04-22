@@ -11,11 +11,13 @@ document.addEventListener("click", function(){
     setTimeout(() => {
 
         try{
+            //find departure and arrival airports
             var depiatas = findcitypairs("dep");
             var arriatas = findcitypairs("arr");
         
             var distances = []
-        
+            
+            //iterate through list of routes and find distances
             for (let i=0; i<depiatas.length; i++){
                 var deplat = getairportcoord(depiatas[i],"lat");
                 var deplon = getairportcoord(depiatas[i],"lon");
@@ -24,7 +26,8 @@ document.addEventListener("click", function(){
                 var arrlon = getairportcoord(arriatas[i],"lon");
                 distances.push(getDistanceFromLatLon(deplat,deplon,arrlat,arrlon));
             }
-        
+            
+            //determine active tab to show relative distance for leg
             var activetab = document.getElementsByClassName("mat-tab-label-active");
             var tabindex = (activetab[0].getAttribute("aria-posinset")-1);
         
@@ -53,6 +56,7 @@ function roundandmult(distance,multiplier){
 function findcitypairs(deporarr){
     if (deporarr == "dep"){
         try{
+            //grab legs in case of multi-leg itineraries
             var citypair = document.getElementsByClassName("cell tab-city-pair");
             var deps = [];
             for (let i=0; i<citypair.length; i++){
@@ -61,6 +65,7 @@ function findcitypairs(deporarr){
             if (deps.length>0){
                 return deps;
             }
+            //grab flight in case of single flight itinerary
             else {
                 var citycodes = document.getElementsByClassName("city-code");
                 deps.push(citycodes[0].innerHTML);
@@ -74,6 +79,7 @@ function findcitypairs(deporarr){
 
     else if (deporarr == "arr"){
         try{
+            //grab legs in case of multi-leg itineraries
             var citypair = document.getElementsByClassName("cell tab-city-pair");
             var arrs = [];
             for (let i=0; i<citypair.length; i++){
@@ -82,6 +88,7 @@ function findcitypairs(deporarr){
             if (arrs.length>0){
                 return arrs;
             }
+            //grab flight in case of single flight itinerary
             else {
                 var citycodes = document.getElementsByClassName("city-code");
                 arrs.push(citycodes[1].innerHTML);
@@ -138,6 +145,7 @@ function getDistanceFromLatLon(lat1,lon1,lat2,lon2) {
 
 function findbookcodes(depiatas,arriatas,distances,tabindex){
     var bookcodesa = document.getElementsByTagName("li");
+    //two versions of AA website
     for (let i=0; i<bookcodesa.length; i++){
         if (bookcodesa[i].innerHTML == "Booking code: O" || bookcodesa[i].innerHTML == "Booking code: Q" || bookcodesa[i].innerHTML == "Booking code: B"){
             bookcodesa[i].innerHTML += " (25% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.25);
