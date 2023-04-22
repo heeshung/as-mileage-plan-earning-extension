@@ -7,6 +7,8 @@
     {
         "resources": ["scripts/airports.json"],
         "matches": [
+            "https://www.alaskaair.com/*",
+            "https://alaskaair.com/*",
             "https://www.aa.com/*",
             "https://aa.com/*",
             "https://www.britishairways.com/*",
@@ -16,8 +18,14 @@
         ]
     }
   ],
-  "host_permissions": ["https://www.aa.com/*","https://aa.com/*"],
   "content_scripts": [
+        {
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/alaskaair.js"],
+            "matches": [
+                "https://www.alaskaair.com/Shopping/Flights/*",
+                "https://alaskaair.com/booking/Shopping/Flights*"
+            ]
+        },
         {
             "js": ["scripts/jquery-3.6.4.min.js","scripts/americanair.js"],
             "matches": [
