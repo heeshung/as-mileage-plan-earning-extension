@@ -55,9 +55,9 @@ function findcitypairs(deporarr){
                     deps.push(alldivs[i].innerHTML.substring(1,4));
                     i++;
                 }
-                return deps;
             }
         }
+        return deps;
     }
 
     else if (deporarr == "arr"){
@@ -70,9 +70,9 @@ function findcitypairs(deporarr){
                     arrs.push(alldivs[i].innerHTML.substring(5,8));
                     i++;
                 }
-                return arrs;
             }
         }
+        return arrs;
     }
 }
 
@@ -135,7 +135,6 @@ function findbookcodes(depiatas,arriatas,distances){
                 divindices.push(i);
                 i++;
             }
-            break;
         }
     }
 
@@ -153,7 +152,6 @@ function findbookcodes(depiatas,arriatas,distances){
                 i++;
             }
             var panelend = i;
-            break;
         }
     }
 
