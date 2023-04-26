@@ -21,10 +21,8 @@
         {
             "js": ["scripts/jquery-3.6.4.min.js","scripts/americanair.js"],
             "matches": [
-                "https://www.aa.com/booking/choose-flights/*",
-                "https://aa.com/booking/choose-flights/*",
-                "https://www.aa.com/booking/your-trip-summary",
-                "https://aa.com/booking/your-trip-summary"
+                "https://www.aa.com/booking/*",
+                "https://aa.com/booking/*"
             ]
         },
         {
