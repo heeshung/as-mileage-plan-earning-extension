@@ -10,7 +10,7 @@ document.addEventListener("click", function(){
 
     setTimeout(() => {
 
-        //try{
+        try{
             //find departure and arrival airports
             var depiatas = findcitypairs("dep");
             var arriatas = findcitypairs("arr");
@@ -33,13 +33,13 @@ document.addEventListener("click", function(){
         
             
         
-            findbookcodes(depiatas,arriatas,distances,tabindex);
-        //}
-        //catch{
+            findbookcodes(distances,tabindex);
+        }
+        catch{
             var activetab = 1;
             var tabindex = 1;
             return 1;
-        //}
+        }
     },250);
 });
 
@@ -143,7 +143,7 @@ function getDistanceFromLatLon(lat1,lon1,lat2,lon2) {
     return deg * (Math.PI/180)
 }
 
-function findbookcodes(depiatas,arriatas,distances,tabindex){
+function findbookcodes(distances,tabindex){
     var bookcodesa = document.getElementsByTagName("li");
     //two versions of AA website
     for (let i=0; i<bookcodesa.length; i++){
@@ -165,7 +165,7 @@ function findbookcodes(depiatas,arriatas,distances,tabindex){
         else if (bookcodesa[i].innerHTML == "Booking code: D" || bookcodesa[i].innerHTML == "Booking code: I" || bookcodesa[i].innerHTML == "Booking code: R" || bookcodesa[i].innerHTML == "Booking code: A"){
             bookcodesa[i].innerHTML += " (150% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1.5);
         }
-        else if (bookcodesa[i].innerHTML == "Booking code: H" || bookcodesa[i].innerHTML == "Booking code: J" || bookcodesa[i].innerHTML == "Booking code: F"){
+        else if (bookcodesa[i].innerHTML == "Booking code: J" || bookcodesa[i].innerHTML == "Booking code: F"){
             bookcodesa[i].innerHTML += " (200% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],2.0);
         }
     }

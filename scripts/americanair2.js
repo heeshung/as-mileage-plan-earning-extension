@@ -39,7 +39,7 @@ window.addEventListener("load", function(){
         }
 
 
-       // try{
+        try{
             //find departure and arrival airports
             var depiatas = findcitypairs(utagdict.segment_city_pair,"dep");
             var arriatas = findcitypairs(utagdict.segment_city_pair,"arr");
@@ -61,11 +61,11 @@ window.addEventListener("load", function(){
             var carriers = findcarriers(utagdict.segment_operating_carrier_code);
             var flightnums = findflightnumbers(utagdict.segment_flight_number);
             displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,flightnums,utagdict.true_ond);
-    //    }
+        }
 
-      //  catch {
-      //      return 1;
-      //  }
+        catch {
+            return 1;
+        }
     },250);
 });
 
@@ -81,7 +81,7 @@ function roundandmult(distance,multiplier){
 
 function findclasses(classesraw){
     var classesstring = classesraw.split('"');
- //   try{
+    try{
         var classes = [];
         for (let i=0; i<classesstring.length; i++){
             if (classesstring[i].match(/[A-Z]/g)){
@@ -89,15 +89,15 @@ function findclasses(classesraw){
             }
         }
         return classes;
-//    }
- //   catch {
- //       return 1;
- //   }
+    }
+    catch {
+        return 1;
+    }
 }
 
 function findcarriers(carriercoderaw){
     var carriercodestring = carriercoderaw.split('"');
- //   try {
+    try {
         var carriers = [];
         for (let i=0; i<carriercodestring.length; i++){
             if (carriercodestring[i].match(/[A-Z]/g)){
@@ -105,15 +105,15 @@ function findcarriers(carriercoderaw){
             }
         }
         return carriers;
- //   }
-  //  catch {
-  //      return 1;
-  //  }
+    }
+    catch {
+        return 1;
+    }
 }
 
 function findflightnumbers(flightnumberraw){
     var flightnumberstring = flightnumberraw.split('"');
- //   try{
+    try{
         var flightnums = [];
         for (let i=0; i<flightnumberstring.length; i++){
             if (flightnumberstring[i].match(/\d+/g)!=null){
@@ -121,15 +121,15 @@ function findflightnumbers(flightnumberraw){
             }
         }
         return flightnums;
- //   }
-  //  catch {
-  //      return 1;
-  //  }
+    }
+    catch {
+        return 1;
+    }
 }
 
 function findfarecodes(farecodesraw){
     var farecodestring = farecodesraw.split('"');
- //   try {
+    try {
         var farecodes = [];
         for (let i=0; i<farecodestring.length; i++){
             if (farecodestring[i].length>5){
@@ -137,10 +137,10 @@ function findfarecodes(farecodesraw){
             }
         }
         return farecodes;
-//    }
-//    catch {
- //       return 1;
- //   }
+    }
+    catch {
+        return 1;
+    }
 }
 
 function findcitypairs(citypairraw,deporarr){
