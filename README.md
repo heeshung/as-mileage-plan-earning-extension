@@ -12,6 +12,6 @@ This Chrome extension seamlessly displays expected mileage earnings on Alaska Ai
 
 ## Screenshots
 
-![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/americanair.png?raw=true)
+![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/americanair1280.png?raw=true)
 
-![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/finnair.png?raw=true)
+![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/finnair1280.png?raw=true)
