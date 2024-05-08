@@ -10,7 +10,7 @@ document.addEventListener("click", function(){
 
     setTimeout(() => {
 
-        try{
+        //try{
             //find departure and arrival airports
             var depiatas = findcitypairs("dep");
             var arriatas = findcitypairs("arr");
@@ -28,18 +28,18 @@ document.addEventListener("click", function(){
             }
             
             //determine active tab to show relative distance for leg
-            var activetab = document.getElementsByClassName("mat-tab-label-active");
+            var activetab = document.getElementsByClassName("mdc-tab--active");
             var tabindex = (activetab[0].getAttribute("aria-posinset")-1);
         
             
         
             findbookcodes(depiatas,arriatas,distances,tabindex);
-        }
-        catch{
+        //}
+        //catch{
             var activetab = 1;
             var tabindex = 1;
             return 1;
-        }
+        //}
     },250);
 });
 
