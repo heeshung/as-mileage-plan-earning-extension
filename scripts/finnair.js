@@ -6,33 +6,30 @@ fetch(url)
     })
     .then(data => obj = data);
 
-document.addEventListener("mousedown", function(){
-
-    setTimeout(() => {
-        try{
-            var depiatas = findcitypairs("dep");
-            var arriatas = findcitypairs("arr");
-        
-            var distances = [];
-        
-            for (let i=0; i<depiatas.length; i++){
-                var deplat = getairportcoord(depiatas[i],"lat");
-                var deplon = getairportcoord(depiatas[i],"lon");
-        
-                var arrlat = getairportcoord(arriatas[i],"lat");
-                var arrlon = getairportcoord(arriatas[i],"lon");
-                distances.push(getDistanceFromLatLon(deplat,deplon,arrlat,arrlon));
-            }
-            
-        
-            findbookcodes(depiatas,arriatas,distances);
-        }
+setInterval(() => {
+    try{
+        var depiatas = findcitypairs("dep");
+        var arriatas = findcitypairs("arr");
     
-        catch{
-            return 1;
+        var distances = [];
+    
+        for (let i=0; i<depiatas.length; i++){
+            var deplat = getairportcoord(depiatas[i],"lat");
+            var deplon = getairportcoord(depiatas[i],"lon");
+    
+            var arrlat = getairportcoord(arriatas[i],"lat");
+            var arrlon = getairportcoord(arriatas[i],"lon");
+            distances.push(getDistanceFromLatLon(deplat,deplon,arrlat,arrlon));
         }
-    },250);
-});
+        
+    
+        findbookcodes(depiatas,arriatas,distances);
+    }
+
+    catch{
+        return 1;
+    }
+},2000);
 
 function roundandmult(distance,multiplier){
     var final = Math.round(distance*multiplier);
