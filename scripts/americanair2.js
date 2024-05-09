@@ -56,8 +56,8 @@ window.addEventListener("load", function(){
                 distances.push(getDistanceFromLatLon(deplat,deplon,arrlat,arrlon));
             }
 
-            var farecodes = findfarecodes(utagdict.fare_basis_codes);
             var classes = findclasses(utagdict.segment_fare_brand_code);
+            var farecodes = findfarecodes(utagdict.fare_basis_codes, classes);
             var carriers = findcarriers(utagdict.segment_operating_carrier_code);
             var flightnums = findflightnumbers(utagdict.segment_flight_number);
             displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,flightnums,utagdict.true_ond);
@@ -127,13 +127,23 @@ function findflightnumbers(flightnumberraw){
     }
 }
 
-function findfarecodes(farecodesraw){
+function findfarecodes(farecodesraw,classes){
     var farecodestring = farecodesraw.split('"');
     try {
         var farecodes = [];
+        var farecodesfiltered = [];
+        console.log(classes)
         for (let i=0; i<farecodestring.length; i++){
             if (farecodestring[i].length>5){
-                farecodes.push(farecodestring[i][0]);
+                farecodesfiltered.push(farecodestring[i]);              
+            }
+        }
+        for (let i=0; i<farecodesfiltered.length; i++){
+            if (classes[i] == "FIR" || classes[i] == "BASIC"){
+                farecodes.push(farecodesfiltered[i][farecodesfiltered[i].length-2])
+            }
+            else {
+                farecodes.push(farecodesfiltered[i][0]);
             }
         }
         return farecodes;
