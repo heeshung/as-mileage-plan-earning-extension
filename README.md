@@ -13,6 +13,9 @@ Make a more informed choice when shopping for flights on Alaska Airlines' partne
 - Alaska Airlines (alaskaair.com)
 - British Airways (US) (ba.com)
 
+## Installation
+[Install directly from the Chrome Web Store](https://chromewebstore.google.com/detail/alaska-airlines-mileage-p/lahlhfjmapfpnpcmioiiiojijncpjclb?hl=en&authuser=0)
+
 
 ## Screenshots
 
