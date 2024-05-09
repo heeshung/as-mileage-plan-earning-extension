@@ -4,10 +4,14 @@
 This Chrome extension seamlessly displays expected mileage earnings on Alaska Airlines' Mileage Plan when flying partner airlines.  The estimates are based on flight distance and purchased fare classes.
 
 
-## Currently Supported Airline Websites
+## Supported Websites
 
-- American Airlines (US)
-- Finnair (US)
+- American Airlines (US) (aa.com)
+- Finnair (US) (finnair.com)
+
+## Coming Soon
+- Alaska Airlines (alaskaair.com)
+- British Airways (US) (ba.com)
 
 
 ## Screenshots
