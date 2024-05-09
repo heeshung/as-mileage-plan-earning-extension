@@ -148,49 +148,49 @@ function findbookcodes(distances,tabindex){
     //two versions of AA website
     for (let i=0; i<bookcodesa.length; i++){
         if (bookcodesa[i].innerHTML == "Booking code: O" || bookcodesa[i].innerHTML == "Booking code: Q" || bookcodesa[i].innerHTML == "Booking code: B"){
-            bookcodesa[i].innerHTML += " (25% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.25);
+            bookcodesa[i].innerHTML += " (25%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.25);
         }
         else if (bookcodesa[i].innerHTML == "Booking code: N" || bookcodesa[i].innerHTML == "Booking code: S"){
-            bookcodesa[i].innerHTML += " (50% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.5);
+            bookcodesa[i].innerHTML += " (50%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.5);
         }
         else if (bookcodesa[i].innerHTML == "Booking code: G" || bookcodesa[i].innerHTML == "Booking code: V"){
-            bookcodesa[i].innerHTML += " (75% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.75);
+            bookcodesa[i].innerHTML += " (75%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.75);
         }
         else if (bookcodesa[i].innerHTML == "Booking code: H" || bookcodesa[i].innerHTML == "Booking code: K" || bookcodesa[i].innerHTML == "Booking code: L" || bookcodesa[i].innerHTML == "Booking code: M" || bookcodesa[i].innerHTML == "Booking code: Y" || bookcodesa[i].innerHTML == "Booking code: P"){
-            bookcodesa[i].innerHTML += " (100% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1);
+            bookcodesa[i].innerHTML += " (100%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1);
         }
         else if (bookcodesa[i].innerHTML == "Booking code: W"){
-            bookcodesa[i].innerHTML += " (110% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1.1);
+            bookcodesa[i].innerHTML += " (110%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.1);
         }
         else if (bookcodesa[i].innerHTML == "Booking code: D" || bookcodesa[i].innerHTML == "Booking code: I" || bookcodesa[i].innerHTML == "Booking code: R" || bookcodesa[i].innerHTML == "Booking code: A"){
-            bookcodesa[i].innerHTML += " (150% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1.5);
+            bookcodesa[i].innerHTML += " (150%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.5);
         }
         else if (bookcodesa[i].innerHTML == "Booking code: J" || bookcodesa[i].innerHTML == "Booking code: F"){
-            bookcodesa[i].innerHTML += " (200% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],2.0);
+            bookcodesa[i].innerHTML += " (200%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],2.0);
         }
     }
     var bookcodes = document.getElementsByClassName("booking-code");
     Array.prototype.forEach.call(bookcodes, function(bookcode){
         if (bookcode.innerHTML == "O" || bookcode.innerHTML == "Q" || bookcode.innerHTML == "B"){
-            bookcode.innerHTML += " (25% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.25);
+            bookcode.innerHTML += " (25%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.25);
         }
         else if (bookcode.innerHTML == "N" || bookcode.innerHTML == "S"){
-            bookcode.innerHTML += " (50% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.5);
+            bookcode.innerHTML += " (50%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.5);
         }
         else if (bookcode.innerHTML == "G" || bookcode.innerHTML == "V"){
-            bookcode.innerHTML += " (75% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],0.75);
+            bookcode.innerHTML += " (75%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.75);
         }
         else if (bookcode.innerHTML == "H" || bookcode.innerHTML == "K" || bookcode.innerHTML == "L" || bookcode.innerHTML == "M" || bookcode.innerHTML == "Y" || bookcode.innerHTML == "P"){
-            bookcode.innerHTML += " (100% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1);
+            bookcode.innerHTML += " (100%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1);
         }
         else if (bookcode.innerHTML == "W"){
-            bookcode.innerHTML += " (110% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1.1);
+            bookcode.innerHTML += " (110%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.1);
         }
         else if (bookcode.innerHTML == "D" || bookcode.innerHTML == "I" || bookcode.innerHTML == "R" || bookcode.innerHTML == "A"){
-            bookcode.innerHTML += " (150% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],1.5);
+            bookcode.innerHTML += " (150%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.5);
         }
         else if (bookcode.innerHTML == "J" || bookcode.innerHTML == "F"){
-            bookcode.innerHTML += " (200% AS EQM & RDM) Estimated AS EQMs & RDMs Earned: " + roundandmult(distances[tabindex],2.0);
+            bookcode.innerHTML += " (200%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],2.0);
         }
     });
 }

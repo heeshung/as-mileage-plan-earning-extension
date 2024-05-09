@@ -155,29 +155,26 @@ function findbookcodes(depiatas,arriatas,distances){
     for (let i=0; i<divindices.length; i++){
         if (opby[i]==0){
             if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != "*"){
-                alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp0 AS EQMs & RDMs Earned*";
+                alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp0 AS EQMs Earned*";
             }
             showasterisk = 1;
         }
         else if (opby[i] == 1){
             if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != ")"){
-                if (flightclasses[i] == "A" || flightclasses[i] == "G"){
-                    alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp" + roundandmult(distances[i],0.25) + " AS EQMs & RDMs Earned (25%)";
+                if (flightclasses[i] == "A" || flightclasses[i] == "W" || flightclasses[i] == "G"){
+                    alldivs[divindices[i]].innerHTML += "(25%)<br>&nbsp&nbsp" + roundandmult(distances[i],0.25) + " AS EQMs Earned";
                 }
-                else if (flightclasses[i] == "K" || flightclasses[i] == "M" || flightclasses[i] == "L" || flightclasses[i] == "V" || flightclasses[i] == "S" || flightclasses[i] == "N" || flightclasses[i] == "Q" || flightclasses[i] == "O" || flightclasses[i] == "Z"){
-                    alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp" + roundandmult(distances[i],0.5) + " AS EQMs & RDMs Earned (50%)";
+                else if (flightclasses[i] == "K" || flightclasses[i] == "M" || flightclasses[i] == "P" || flightclasses[i] == "T" || flightclasses[i] == "V" || flightclasses[i] == "L" || flightclasses[i] == "N" || flightclasses[i] == "S" || flightclasses[i] == "Q" || flightclasses[i] == "O" || flightclasses[i] == "Z" || flightclasses[i] == "R"){
+                    alldivs[divindices[i]].innerHTML += "(50%)<br>&nbsp&nbsp" + roundandmult(distances[i],0.5) + " AS EQMs Earned";
                 }
                 else if (flightclasses[i] == "Y" || flightclasses[i] == "B" || flightclasses[i] == "H"){
-                    alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp" + roundandmult(distances[i],1.00) + " AS EQMs & RDMs Earned (100%)";
-                }
-                else if (flightclasses[i] == "W" || flightclasses[i] == "E" || flightclasses[i] == "T" || flightclasses[i] == "P"){
-                    alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp" + roundandmult(distances[i],1.00) + " AS EQMs & RDMs Earned (100%)";
+                    alldivs[divindices[i]].innerHTML += "(100%)<br>&nbsp&nbsp" + roundandmult(distances[i],1.00) + " AS EQMs Earned";
                 }
                 else if (flightclasses[i] == "I" || flightclasses[i] == "R"){
-                    alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp" + roundandmult(distances[i],1.25) + " AS EQMs & RDMs Earned (125%)";
+                    alldivs[divindices[i]].innerHTML += "(125%)<br>&nbsp&nbsp" + roundandmult(distances[i],1.25) + " AS EQMs Earned";
                 }
                 else if (flightclasses[i] == "J" || flightclasses[i] == "C" || flightclasses[i] == "D"){
-                    alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp" + roundandmult(distances[i],2.0) + " AS EQMs (200%) +<br>&nbsp&nbsp" + roundandmult(distances[i],3.0) + " AS RDMs Earned (300%)";
+                    alldivs[divindices[i]].innerHTML += "(200%)<br>&nbsp&nbsp" + roundandmult(distances[i],2.0) + " AS EQMs Earned";
                 }
             }
         }
