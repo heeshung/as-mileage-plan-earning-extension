@@ -60,7 +60,7 @@ window.addEventListener("load", function(){
             var farecodes = findfarecodes(utagdict.fare_basis_codes, classes);
             var carriers = findcarriers(utagdict.segment_operating_carrier_code);
             var flightnums = findflightnumbers(utagdict.segment_flight_number);
-            displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,flightnums,utagdict.true_ond);
+            displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,flightnums,utagdict.true_ond,utagdict.trip_type);
         }
 
         catch {
@@ -132,7 +132,6 @@ function findfarecodes(farecodesraw,classes){
     try {
         var farecodes = [];
         var farecodesfiltered = [];
-        console.log(classes)
         for (let i=0; i<farecodestring.length; i++){
             if (farecodestring[i].length>5){
                 farecodesfiltered.push(farecodestring[i]);              
@@ -230,21 +229,20 @@ function deg2rad(deg) {
     return deg * (Math.PI/180)
 }
 
-function displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,flightnums,true_ond){
+function displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,flightnums,true_ond,trip_type){
     var roundtrip = 0;
     //get origin and final destination
     var origin = true_ond.substring(1,4);
-    var destination = true_ond.substring(5,8);
+    var destination = true_ond.substring(true_ond.length-5,true_ond.length-2); 
     //determine if trip is roundtrip
-    for (let i=0; i<depiatas.length; i++){
-        if (depiatas[i]==destination){
-            roundtrip = 1;
-            break;
-        }
+    if (trip_type[1]=="R"){
+        roundtrip = 1
     }
 
     var citicarddiv = document.getElementsByClassName("citi");
-    citicarddiv[0].innerHTML='<h3 id="costSummaryTitle" class="aaDarkGray no-margin-bottom">Outbound Flights:</h3>';
+    const specialoffer = document.getElementById("watCitiRibbon")
+    citicarddiv[0].innerHTML='';
+    specialoffer.remove();
     var adjusteddistances = [];
 
     let i=0;
@@ -283,6 +281,7 @@ function displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,
     }
 
     else if (roundtrip == 1){
+        citicarddiv[0].innerHTML+='<h3 id="costSummaryTitle" class="aaDarkGray no-margin-bottom">Outbound Flights:</h3>';
         while (depiatas[i]!=destination){
             if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
                 citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25% AS EQMs & RDMs)<br>"+roundandmult(distances[i],0.25)+" AS EQMs & RDMs earned<br><br>");
