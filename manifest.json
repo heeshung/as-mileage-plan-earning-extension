@@ -9,7 +9,6 @@
         "matches": [
             "https://www.aa.com/*",
             "https://aa.com/*",
-            "https://www.britishairways.com/*",
             "https://www.finnair.com/*",
             "https://finnair.com/*"
         ]
@@ -18,21 +17,21 @@
   "host_permissions": ["https://www.aa.com/*","https://aa.com/*","https://www.finnair.com/*","https://finnair.com/*"],
   "content_scripts": [
         {
-            "js": ["scripts/jquery-3.6.4.min.js","scripts/americanair.js"],
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/aa.js"],
             "matches": [
                 "https://www.aa.com/booking/*",
                 "https://aa.com/booking/*"
             ]
         },
         {
-            "js": ["scripts/jquery-3.6.4.min.js","scripts/americanair2.js"],
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/aa2.js"],
             "matches": [
                 "https://www.aa.com/booking/passengers*",
                 "https://aa.com/booking/passengers*"
             ]
         },
         {
-            "js": ["scripts/jquery-3.6.4.min.js","scripts/finnair.js"],
+            "js": ["scripts/jquery-3.6.4.min.js","scripts/ay.js"],
             "matches": [
                 "https://www.finnair.com/us-en/*",
                 "https://finnair.com/us-en/*"

@@ -19,6 +19,6 @@ Make a more informed choice when shopping for flights on Alaska Airlines' partne
 
 ## Screenshots
 
-![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/americanair1280.png?raw=true)
+![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/aa1280.png?raw=true)
 
-![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/finnair1280.png?raw=true)
+![App Screenshot](https://github.com/heeshung/as-mileage-plan-earning-extension/blob/main/screenshots/ay1280.png?raw=true)
