@@ -189,7 +189,7 @@ function findbookcodes(depiatas,arriatas,distances){
     if (asteriskprinted == false && showasterisk == true){
         var child = document.createElement("div");
         child.className = "asterisk";
-        child.innerHTML = "<br>*Flight number not eligible for AS earning";
+        child.innerHTML = "<br>*Flight number is not eligible for AS earning";
         alldivs[panelend-1].appendChild(child);
     }
 }

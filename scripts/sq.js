@@ -123,10 +123,13 @@ function findbookcodes(distances){
             else if (cabin_class_trimmed=="F" || cabin_class_trimmed=="A"){
                 cabin_class[i].innerHTML+="<span> (150%)<br>AS EQMs Earned: </span>"+roundandmult(distances[i],1.5);
             }
+            else if (cabin_class_trimmed=="V" || cabin_class_trimmed=="K" || cabin_class_trimmed=="Q" || cabin_class_trimmed=="N"){
+                cabin_class[i].innerHTML+="<span> (0%)*<br>AS EQMs Earned: 0*<br>*Fare class is not eligible for AS earning</span>";
+            }
         }
         else {
-            if (cabin_class[i].innerText.includes("*Flight number not eligible for AS earning")==false){
-                cabin_class[i].innerHTML+="<span> (0%)*<br>AS EQMs Earned: 0*<br>*Flight number not eligible for AS earning</span>";
+            if (cabin_class[i].innerText.includes("*Flight number is not eligible for AS earning")==false){
+                cabin_class[i].innerHTML+="<span> (0%)*<br>AS EQMs Earned: 0*<br>*Flight number is not eligible for AS earning</span>";
             }
         }
     }
