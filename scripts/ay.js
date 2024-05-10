@@ -120,8 +120,8 @@ function findbookcodes(depiatas,arriatas,distances){
     var flightclasses = [];
     var divindices = [];
     var alldivs = document.getElementsByTagName("div");
-    var showasterisk = 0;
-    var asteriskprinted = 0;
+    var showasterisk = false;
+    var asteriskprinted = false;
 
     //find travel classes
     for (let i=0; i<alldivs.length; i++){
@@ -141,10 +141,10 @@ function findbookcodes(depiatas,arriatas,distances){
             i++;
             while (alldivs[i].classList.contains("medium-type") && alldivs[i].classList.contains("ng-star-inserted")){
                 if (alldivs[i].innerHTML.includes("Finnair")){
-                    opby.push(1);
+                    opby.push(true);
                 }
                 else {
-                    opby.push(0);
+                    opby.push(false);
                 }
                 i++;
             }
@@ -153,28 +153,28 @@ function findbookcodes(depiatas,arriatas,distances){
     }
 
     for (let i=0; i<divindices.length; i++){
-        if (opby[i]==0){
+        if (opby[i]==false){
             if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != "*"){
-                alldivs[divindices[i]].innerHTML += "<br>&nbsp&nbsp0 AS EQMs Earned*";
+                alldivs[divindices[i]].innerHTML += "(0%)*<br>&nbsp&nbspAS EQMs Earned: 0*";
             }
-            showasterisk = 1;
+            showasterisk = true;
         }
-        else if (opby[i] == 1){
+        else if (opby[i] == true){
             if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != ")"){
                 if (flightclasses[i] == "A" || flightclasses[i] == "W" || flightclasses[i] == "G"){
-                    alldivs[divindices[i]].innerHTML += "(25%)<br>&nbsp&nbsp" + roundandmult(distances[i],0.25) + " AS EQMs Earned";
+                    alldivs[divindices[i]].innerHTML += "(25%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],0.25);
                 }
                 else if (flightclasses[i] == "K" || flightclasses[i] == "M" || flightclasses[i] == "P" || flightclasses[i] == "T" || flightclasses[i] == "V" || flightclasses[i] == "L" || flightclasses[i] == "N" || flightclasses[i] == "S" || flightclasses[i] == "Q" || flightclasses[i] == "O" || flightclasses[i] == "Z" || flightclasses[i] == "R"){
-                    alldivs[divindices[i]].innerHTML += "(50%)<br>&nbsp&nbsp" + roundandmult(distances[i],0.5) + " AS EQMs Earned";
+                    alldivs[divindices[i]].innerHTML += "(50%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],0.5);
                 }
                 else if (flightclasses[i] == "Y" || flightclasses[i] == "B" || flightclasses[i] == "H"){
-                    alldivs[divindices[i]].innerHTML += "(100%)<br>&nbsp&nbsp" + roundandmult(distances[i],1.00) + " AS EQMs Earned";
+                    alldivs[divindices[i]].innerHTML += "(100%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],1.00);
                 }
                 else if (flightclasses[i] == "I" || flightclasses[i] == "R"){
-                    alldivs[divindices[i]].innerHTML += "(125%)<br>&nbsp&nbsp" + roundandmult(distances[i],1.25) + " AS EQMs Earned";
+                    alldivs[divindices[i]].innerHTML += "(125%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],1.25);
                 }
                 else if (flightclasses[i] == "J" || flightclasses[i] == "C" || flightclasses[i] == "D"){
-                    alldivs[divindices[i]].innerHTML += "(200%)<br>&nbsp&nbsp" + roundandmult(distances[i],2.0) + " AS EQMs Earned";
+                    alldivs[divindices[i]].innerHTML += "(200%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],2.0);
                 }
             }
         }
@@ -182,11 +182,11 @@ function findbookcodes(depiatas,arriatas,distances){
 
     //see if footnote has already been added
     if (document.getElementsByClassName("asterisk").length > 0){
-        asteriskprinted = 1;
+        asteriskprinted = true;
     }
 
     //add footnote if needed
-    if (asteriskprinted == 0 && showasterisk == 1){
+    if (asteriskprinted == false && showasterisk == true){
         var child = document.createElement("div");
         child.className = "asterisk";
         child.innerHTML = "<br>*Flight number not eligible for AS earning";

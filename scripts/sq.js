@@ -126,7 +126,7 @@ function findbookcodes(distances){
         }
         else {
             if (cabin_class[i].innerText.includes("*Flight number not eligible for AS earning")==false){
-                cabin_class[i].innerHTML+="<span> (0%)<br>AS EQMs Earned: 0*<br>*Flight number not eligible for AS earning</span>";
+                cabin_class[i].innerHTML+="<span> (0%)*<br>AS EQMs Earned: 0*<br>*Flight number not eligible for AS earning</span>";
             }
         }
     }
