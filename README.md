@@ -6,9 +6,9 @@ Make a more informed choice when shopping for flights on Alaska Airlines' partne
 
 ## Supported Websites
 
-- American Airlines (US) (aa.com)
-- Finnair (US) (finnair.com)
-- Singapore Airlines (US) (singaporeair.com)
+- [American Airlines](https://aa.com)
+- [Finnair (US)](https://finnair.com)
+- [Singapore Airlines](https://singaporeair.com)
 
 ## Installation
 [Install directly from the Chrome Web Store](https://chromewebstore.google.com/detail/alaska-airlines-mileage-p/lahlhfjmapfpnpcmioiiiojijncpjclb?hl=en&authuser=0)
