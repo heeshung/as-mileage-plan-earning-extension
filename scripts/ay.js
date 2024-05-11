@@ -160,6 +160,9 @@ function findbookcodes(depiatas,arriatas,distances){
                     else if (fareclass == "Y" || fareclass == "B" || fareclass == "H"){
                         middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (100%)<br>AS EQMs Earned: "+roundandmult(distances[i],1)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
                     }
+                    else {
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Fare class is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
                 }
                 else {
                     middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Flight number is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
@@ -176,8 +179,11 @@ function findbookcodes(depiatas,arriatas,distances){
                         middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (200%)<br>AS EQMs Earned: "+roundandmult(distances[i],2)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
                     }
                     else {
-                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Flight number is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Fare class is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
                     }
+                }
+                else {
+                    middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Flight number is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
                 }
             }
         }
@@ -220,13 +226,13 @@ function findbookcodes(depiatas,arriatas,distances){
 
     for (let i=0; i<divindices.length; i++){
         if (opby[i]==false){
-            if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != "*"){
+            if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != "*" && alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != ")"){
                 alldivs[divindices[i]].innerHTML += "(0%)*<br>&nbsp&nbspAS EQMs Earned: 0*";
             }
             showasterisk = true;
         }
         else if (opby[i] == true){
-            if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != ")"){
+            if (alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != "*" && alldivs[divindices[i]].innerHTML.substring(alldivs[divindices[i]].innerHTML.length-1) != ")"){
                 if (flightclasses[i] == "A" || flightclasses[i] == "W" || flightclasses[i] == "G"){
                     alldivs[divindices[i]].innerHTML += "(25%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],0.25);
                 }
@@ -242,6 +248,11 @@ function findbookcodes(depiatas,arriatas,distances){
                 else if (flightclasses[i] == "J" || flightclasses[i] == "C" || flightclasses[i] == "D"){
                     alldivs[divindices[i]].innerHTML += "(200%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],2.0);
                 }
+                //if fare class can't be found
+                else if (flightclasses[i].match(/[a-z]/i)){
+                    alldivs[divindices[i]].innerHTML += "(0%)*<br>&nbsp&nbspAS EQMs Earned: 0*";
+                    showasterisk = true;
+                }
             }
         }
     }
@@ -255,7 +266,7 @@ function findbookcodes(depiatas,arriatas,distances){
     if (asteriskprinted == false && showasterisk == true){
         var child = document.createElement("div");
         child.className = "asterisk";
-        child.innerHTML = "<br>*Flight number is not eligible for AS earning";
+        child.innerHTML = "<br>*Flight number or fare class is not eligible for AS earning";
         alldivs[panelend-1].appendChild(child);
     }
 }
