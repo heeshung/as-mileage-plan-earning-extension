@@ -35,8 +35,8 @@
         {
             "js": ["scripts/jquery-3.6.4.min.js","scripts/ay.js"],
             "matches": [
-                "https://www.finnair.com/us-en/booking/*",
-                "https://finnair.com/us-en/booking/*"
+                "https://www.finnair.com/us-en/*",
+                "https://finnair.com/us-en/*"
             ]
         },
         {

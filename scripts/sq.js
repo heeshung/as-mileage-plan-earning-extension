@@ -103,7 +103,7 @@ function findbookcodes(distances){
         if (op_by[i].innerText=="Singapore Airlines"){
             let cabin_class_trimmed = cabin_class[i].innerText.substring(cabin_class[i].innerText.length-2,cabin_class[i].innerText.length-1);
             if (cabin_class_trimmed=="H" || cabin_class_trimmed=="W"){
-                cabin_class[i].innerHTML+="<span> (50%)<br>AS EQMs Earned:</span>"+roundandmult(distances[i],0.5);
+                cabin_class[i].innerHTML+="<span> (50%)<br>AS EQMs Earned: </span>"+roundandmult(distances[i],0.5);
             }
             else if (cabin_class_trimmed=="E" || cabin_class_trimmed=="M"){
                 cabin_class[i].innerHTML+="<span> (75%)<br>AS EQMs Earned: </span>"+roundandmult(distances[i],0.75);
