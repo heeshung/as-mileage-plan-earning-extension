@@ -54,6 +54,12 @@ function findcitypairs(deporarr){
                 }
             }
         }
+        //also process details and upgrades pane
+        var middlepage = document.querySelectorAll("span.itinerary-endpoint-location");
+        for (let i=0;i<middlepage.length;i+=2){
+            let iata_pos = middlepage[i].innerText.indexOf("(");
+            deps.push(middlepage[i].innerText.substring(iata_pos+1,iata_pos+4));
+        }
         return deps;
     }
 
@@ -68,6 +74,12 @@ function findcitypairs(deporarr){
                     i++;
                 }
             }
+        }
+        //also process details and upgrades pane
+        var middlepage = document.querySelectorAll("span.itinerary-endpoint-location");
+        for (let i=1;i<middlepage.length;i+=2){
+            let iata_pos = middlepage[i].innerText.indexOf("(");
+            arrs.push(middlepage[i].innerText.substring(iata_pos+1,iata_pos+4));
         }
         return arrs;
     }
@@ -123,12 +135,66 @@ function findbookcodes(depiatas,arriatas,distances){
     var showasterisk = false;
     var asteriskprinted = false;
 
+    //search middle page
+    var middle_p = document.querySelectorAll("[data-test-flight-details]");
+
+    for (let i=0;i<middle_p.length;i++){
+        //check not already modified
+        if (middle_p[i].innerText.includes("%")==false){
+            if (middle_p[i].innerText.includes("Economy") || middle_p[i].innerText.includes("Premium Economy")){
+                if (middle_p[i].innerText.includes("Premium Economy")){
+                    var class_pos = middle_p[i].innerHTML.indexOf("Premium Economy")+16;
+                    var fareclass = middle_p[i].innerHTML.substring(class_pos,class_pos+1)
+                }
+                else if (middle_p[i].innerText.includes("Economy")){
+                    var class_pos = middle_p[i].innerHTML.indexOf("Economy")+8;
+                    var fareclass = middle_p[i].innerHTML.substring(class_pos,class_pos+1)
+                }
+                if (middle_p[i].innerText.includes("Operated by Finnair")){
+                    if (fareclass == "A" || fareclass == "W" || fareclass == "G"){
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (25%)<br>AS EQMs Earned: "+roundandmult(distances[i],0.25)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
+                    else if (fareclass == "K" || fareclass == "M" || fareclass == "P" || fareclass == "T" || fareclass == "V" || fareclass == "L" || fareclass == "N" || fareclass == "S" || fareclass == "Q" || fareclass == "O" || fareclass == "Z" || fareclass == "R"){
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (50%)<br>AS EQMs Earned: "+roundandmult(distances[i],0.5)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
+                    else if (fareclass == "Y" || fareclass == "B" || fareclass == "H"){
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (100%)<br>AS EQMs Earned: "+roundandmult(distances[i],1)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
+                }
+                else {
+                    middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Flight number is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                }
+            }
+            else if (middle_p[i].innerText.includes("Business")){
+                var class_pos = middle_p[i].innerHTML.indexOf("Business")+9;
+                var fareclass = middle_p[i].innerHTML.substring(class_pos,class_pos+1)
+                if (middle_p[i].innerText.includes("Operated by Finnair")){
+                    if (fareclass == "I" || fareclass == "R"){
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (125%)<br>AS EQMs Earned: "+roundandmult(distances[i],1.25)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
+                    else if (fareclass == "J" || fareclass == "C" || fareclass == "D"){
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (200%)<br>AS EQMs Earned: "+roundandmult(distances[i],2)+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
+                    else {
+                        middle_p[i].innerHTML=middle_p[i].innerHTML.substring(0,class_pos+1)+" (0%)*<br>AS EQMs Earned: 0*<br>*Flight number is not eligible for AS earning"+middle_p[i].innerHTML.substring(class_pos+1,middle_p[i].innerHTML.length);
+                    }
+                }
+            }
+        }
+    }
+
     //find travel classes
     for (let i=0; i<alldivs.length; i++){
         if (alldivs[i].innerHTML == "Travel class" && alldivs[i].classList.contains("nordic-blue-900-text")){
             i++;
             while (alldivs[i].classList.contains("medium-type") && alldivs[i].classList.contains("ng-star-inserted")){
-                flightclasses.push(alldivs[i].innerText.substring(alldivs[i].innerText.length-1));
+                //exception for business R fare
+                if (alldivs[i].innerText.includes("Business") && alldivs[i].innerText.substring(alldivs[i].innerText.length-1)=="R"){
+                    flightclasses.push("BUSR");
+                }
+                else {
+                    flightclasses.push(alldivs[i].innerText.substring(alldivs[i].innerText.length-1));
+                }
                 divindices.push(i);
                 i++;
             }
@@ -170,7 +236,7 @@ function findbookcodes(depiatas,arriatas,distances){
                 else if (flightclasses[i] == "Y" || flightclasses[i] == "B" || flightclasses[i] == "H"){
                     alldivs[divindices[i]].innerHTML += "(100%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],1.00);
                 }
-                else if (flightclasses[i] == "I" || flightclasses[i] == "R"){
+                else if (flightclasses[i] == "I" || flightclasses[i] == "BUSR"){
                     alldivs[divindices[i]].innerHTML += "(125%)<br>&nbsp&nbsp" + "AS EQMs Earned: " + roundandmult(distances[i],1.25);
                 }
                 else if (flightclasses[i] == "J" || flightclasses[i] == "C" || flightclasses[i] == "D"){
