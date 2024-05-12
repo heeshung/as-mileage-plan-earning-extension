@@ -1,4 +1,4 @@
-const url2 = chrome.runtime.getURL("scripts/airports.json");
+const url2 = chrome.runtime.getURL("airports/airports.json");
 var obj;
 fetch(url2)
     .then(response => {
@@ -190,7 +190,7 @@ function findcitypairs(citypairraw,deporarr){
 function getairportcoord(iatacode,latorlon){
     if (latorlon == "lat"){
         try{
-            var lat = obj.airports.filter(e => e.iata == iatacode)[0].lat;
+            var lat = Object.values(obj).filter(e => e.iata == iatacode)[0].lat;
             return lat;
         }
         catch{
@@ -200,7 +200,7 @@ function getairportcoord(iatacode,latorlon){
 
     else if (latorlon == "lon"){
         try{
-            var lon = obj.airports.filter(e => e.iata == iatacode)[0].lon;
+            var lon = Object.values(obj).filter(e => e.iata == iatacode)[0].lon;
             return lon;
         }
         
@@ -246,109 +246,148 @@ function displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,
     var adjusteddistances = [];
 
     let i=0;
+    var showasterisk=false;
     if (roundtrip==0){
         while (i<depiatas.length){
-            if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25%)<br>"+roundandmult(distances[i],0.25)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.25));
+            if (carriers[i]=="AA"){
+                if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25%)<br>AS EQMs earned: "+roundandmult(distances[i],0.25)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.25));
+                }
+                else if (farecodes[i]=="N" || farecodes[i]=="S"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (50%)<br>AS EQMs earned: "+roundandmult(distances[i],0.5)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.5));
+                }
+                else if (farecodes[i]=="G" || farecodes[i]=="V"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (75%)<br>AS EQMs earned: "+roundandmult(distances[i],0.75)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.75));
+                }
+                else if (farecodes[i]=="H" || farecodes[i]=="K" || farecodes[i]=="L" || farecodes[i]=="M" || farecodes[i]=="Y" || farecodes[i]=="P"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (100%)<br>AS EQMs earned: "+roundandmult(distances[i],1.00)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.0));
+                }
+                else if (farecodes[i]=="W"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (110%)<br>AS EQMs earned: "+roundandmult(distances[i],1.10)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.10));
+                }
+                else if (farecodes[i]=="D" || farecodes[i]=="I" || farecodes[i]=="R" || farecodes[i]=="A"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (150%)<br>AS EQMs earned: "+roundandmult(distances[i],1.50)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.50));
+                }
+                else if (farecodes[i]=="J" || farecodes[i]=="F"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (200%)<br>AS EQMs earned: "+roundandmult(distances[i],2.00)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],2.00));
+                }
+                else if (farecodes[i].match(/[a-z]/i)){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (0%)*<br>AS EQMs earned: 0*<br><br>");
+                    showasterisk=true;
+                }
             }
-            else if (farecodes[i]=="N" || farecodes[i]=="S"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (50%)<br>"+roundandmult(distances[i],0.5)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.5));
-            }
-            else if (farecodes[i]=="G" || farecodes[i]=="V"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (75%)<br>"+roundandmult(distances[i],0.75)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.75));
-            }
-            else if (farecodes[i]=="H" || farecodes[i]=="K" || farecodes[i]=="L" || farecodes[i]=="M" || farecodes[i]=="Y" || farecodes[i]=="P"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (100%)<br>"+roundandmult(distances[i],1.00)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.0));
-            }
-            else if (farecodes[i]=="W"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (110%)<br>"+roundandmult(distances[i],1.10)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.10));
-            }
-            else if (farecodes[i]=="D" || farecodes[i]=="I" || farecodes[i]=="R" || farecodes[i]=="A"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (150%)<br>"+roundandmult(distances[i],1.50)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.50));
-            }
-            else if (farecodes[i]=="J" || farecodes[i]=="F"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (200%)<br>"+roundandmult(distances[i],2.00)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],2.00));
+            else {
+                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (0%)*<br>AS EQMs earned: 0*<br><br>");
+                showasterisk=true;
             }
             i++;
+        }
+        //add footnote if needed
+        if (showasterisk==true){
+            citicarddiv[0].innerHTML+='<small>*Flight number or fare class is not eligible for AS earning</small><br>'
         }
     }
 
     else if (roundtrip == 1){
         citicarddiv[0].innerHTML+='<h3 id="costSummaryTitle" class="aaDarkGray no-margin-bottom">Outbound Flights:</h3>';
         while (depiatas[i]!=destination){
-            if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25%)<br>"+roundandmult(distances[i],0.25)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.25));
+            if (carriers[i]=="AA"){
+                if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25%)<br>AS EQMs earned: "+roundandmult(distances[i],0.25)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.25));
+                }
+                else if (farecodes[i]=="N" || farecodes[i]=="S"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (50%)<br>AS EQMs earned: "+roundandmult(distances[i],0.5)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.50));
+                }
+                else if (farecodes[i]=="G" || farecodes[i]=="V"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (75%)<br>AS EQMs earned: "+roundandmult(distances[i],0.75)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.75));
+                }
+                else if (farecodes[i]=="H" || farecodes[i]=="K" || farecodes[i]=="L" || farecodes[i]=="M" || farecodes[i]=="Y" || farecodes[i]=="P"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (100%)<br>AS EQMs earned: "+roundandmult(distances[i],1.00)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.00));
+                }
+                else if (farecodes[i]=="W"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (110%)<br>AS EQMs earned: "+roundandmult(distances[i],1.10)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.10));
+                }
+                else if (farecodes[i]=="D" || farecodes[i]=="I" || farecodes[i]=="R" || farecodes[i]=="A"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (150%)<br>AS EQMs earned: "+roundandmult(distances[i],1.50)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.50));
+                }
+                else if (farecodes[i]=="J" || farecodes[i]=="F"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (200%)<br>AS EQMs earned: "+roundandmult(distances[i],2.00)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],2.00));
+                }
+                else if (farecodes[i].match(/[a-z]/i)){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (0%)*<br>AS EQMs earned: 0*<br><br>");
+                    showasterisk=true;
+                }
             }
-            else if (farecodes[i]=="N" || farecodes[i]=="S"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (50%)<br>"+roundandmult(distances[i],0.5)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.50));
-            }
-            else if (farecodes[i]=="G" || farecodes[i]=="V"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (75%)<br>"+roundandmult(distances[i],0.75)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.75));
-            }
-            else if (farecodes[i]=="H" || farecodes[i]=="K" || farecodes[i]=="L" || farecodes[i]=="M" || farecodes[i]=="Y" || farecodes[i]=="P"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (100%)<br>"+roundandmult(distances[i],1.00)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.00));
-            }
-            else if (farecodes[i]=="W"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (110%)<br>"+roundandmult(distances[i],1.10)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.10));
-            }
-            else if (farecodes[i]=="D" || farecodes[i]=="I" || farecodes[i]=="R" || farecodes[i]=="A"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (150%)<br>"+roundandmult(distances[i],1.50)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.50));
-            }
-            else if (farecodes[i]=="J" || farecodes[i]=="F"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (200%)<br>"+roundandmult(distances[i],2.00)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],2.00));
+            else {
+                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (0%)*<br>AS EQMs earned: 0*<br><br>");
+                showasterisk=true;
             }
             i++;
         }
         citicarddiv[0].innerHTML+=('<br><h3 id="costSummaryTitle" class="aaDarkGray no-margin-bottom">Return Flights:</h3>');
         while (i<depiatas.length){
-            if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25%)<br>"+roundandmult(distances[i],0.25)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.25));
+            if (carriers[i]=="AA"){
+                if (farecodes[i]=="O" || farecodes[i]=="Q" || farecodes[i]=="B"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (25%)<br>AS EQMs earned: "+roundandmult(distances[i],0.25)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.25));
+                }
+                else if (farecodes[i]=="N" || farecodes[i]=="S"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (50%)<br>AS EQMs earned: "+roundandmult(distances[i],0.5)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.50));
+                }
+                else if (farecodes[i]=="G" || farecodes[i]=="V"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (75%)<br>AS EQMs earned: "+roundandmult(distances[i],0.75)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],0.75));
+                }
+                else if (farecodes[i]=="H" || farecodes[i]=="K" || farecodes[i]=="L" || farecodes[i]=="M" || farecodes[i]=="Y" || farecodes[i]=="P"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (100%)<br>AS EQMs earned: "+roundandmult(distances[i],1.00)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.00));
+                }
+                else if (farecodes[i]=="W"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (110%)<br>AS EQMs earned: "+roundandmult(distances[i],1.10)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.10));
+                }
+                else if (farecodes[i]=="D" || farecodes[i]=="I" || farecodes[i]=="R" || farecodes[i]=="A"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (150%)<br>AS EQMs earned: "+roundandmult(distances[i],1.50)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],1.50));
+                }
+                else if (farecodes[i]=="J" || farecodes[i]=="F"){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (200%)<br>AS EQMs earned: "+roundandmult(distances[i],2.00)+"<br><br>");
+                    adjusteddistances.push(roundandmult(distances[i],2.00));
+                }
+                else if (farecodes[i].match(/[a-z]/i)){
+                    citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (0%)*<br>AS EQMs earned: 0*<br><br>");
+                    showasterisk=true;
+                }
             }
-            else if (farecodes[i]=="N" || farecodes[i]=="S"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (50%)<br>"+roundandmult(distances[i],0.5)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.50));
-            }
-            else if (farecodes[i]=="G" || farecodes[i]=="V"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (75%)<br>"+roundandmult(distances[i],0.75)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],0.75));
-            }
-            else if (farecodes[i]=="H" || farecodes[i]=="K" || farecodes[i]=="L" || farecodes[i]=="M" || farecodes[i]=="Y" || farecodes[i]=="P"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (100%)<br>"+roundandmult(distances[i],1.00)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.00));
-            }
-            else if (farecodes[i]=="W"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (110%)<br>"+roundandmult(distances[i],1.10)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.10));
-            }
-            else if (farecodes[i]=="D" || farecodes[i]=="I" || farecodes[i]=="R" || farecodes[i]=="A"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (150%)<br>"+roundandmult(distances[i],1.50)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],1.50));
-            }
-            else if (farecodes[i]=="J" || farecodes[i]=="F"){
-                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (200%)<br>"+roundandmult(distances[i],2.00)+" AS EQMs earned<br><br>");
-                adjusteddistances.push(roundandmult(distances[i],2.00));
+            else {
+                citicarddiv[0].innerHTML+=(carriers[i]+flightnums[i]+" "+depiatas[i]+"-"+arriatas[i]+" "+classes[i]+" "+farecodes[i]+" (0%)*<br>AS EQMs earned: 0*<br><br>");
+                showasterisk=true;
             }
             i++;
+        }
+        //add footnote if needed
+        if (showasterisk==true){
+            citicarddiv[0].innerHTML+='<small>*Flight number or fare class is not eligible for AS earning</small><br>'
         }
     }
     var totalmileage = 0;
     for (let i=0; i<adjusteddistances.length; i++){
         totalmileage+=adjusteddistances[i];
     }
-    citicarddiv[0].innerHTML+=('<br><h3 id="costSummaryTitle" class="aaDarkGray no-margin-bottom">Total Expected AS EQMs: '+totalmileage+'</h3>');
+    citicarddiv[0].innerHTML+=('<br><h3 id="costSummaryTitle" class="aaDarkGray no-margin-bottom">Total AS EQMs Earned: '+totalmileage+'</h3>');
 }

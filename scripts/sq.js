@@ -1,4 +1,4 @@
-const url = chrome.runtime.getURL("scripts/airports.json");
+const url = chrome.runtime.getURL("airports/airports.json");
 var obj;
 fetch(url)
     .then(response => {
@@ -57,7 +57,7 @@ function findcitypairs(deporarr){
 function getairportcoord(iatacode,latorlon){
     if (latorlon == "lat"){
         try{
-            var lat = obj.airports.filter(e => e.iata == iatacode)[0].lat;
+            var lat = Object.values(obj).filter(e => e.iata == iatacode)[0].lat;
             return lat;
         }
         catch{
@@ -67,7 +67,7 @@ function getairportcoord(iatacode,latorlon){
 
     else if (latorlon == "lon"){
         try{
-            var lon = obj.airports.filter(e => e.iata == iatacode)[0].lon;
+            var lon = Object.values(obj).filter(e => e.iata == iatacode)[0].lon;
             return lon;
         }
         

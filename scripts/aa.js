@@ -1,4 +1,4 @@
-const url = chrome.runtime.getURL("scripts/airports.json");
+const url = chrome.runtime.getURL("airports/airports.json");
 var obj;
 fetch(url)
     .then(response => {
@@ -104,7 +104,7 @@ function findcitypairs(deporarr){
 function getairportcoord(iatacode,latorlon){
     if (latorlon == "lat"){
         try{
-            var lat = obj.airports.filter(e => e.iata == iatacode)[0].lat;
+            var lat = Object.values(obj).filter(e => e.iata == iatacode)[0].lat;
             return lat;
         }
         catch{
@@ -114,7 +114,7 @@ function getairportcoord(iatacode,latorlon){
 
     else if (latorlon == "lon"){
         try{
-            var lon = obj.airports.filter(e => e.iata == iatacode)[0].lon;
+            var lon = Object.values(obj).filter(e => e.iata == iatacode)[0].lon;
             return lon;
         }
         
@@ -170,27 +170,60 @@ function findbookcodes(distances,tabindex){
         }
     }
     var bookcodes = document.getElementsByClassName("booking-code");
+    //check if flight has AA flight number
+    var flightnumbers = document.getElementsByClassName("flight-number");
+    for (let i=0;i<flightnumbers.length;i++){
+        if (flightnumbers[i].attributes.length==1){
+            var flightnumber = flightnumbers[i].innerHTML;
+            //add asterisk
+            if (flightnumbers[i].innerHTML.includes("AA")==false && flightnumbers[i].innerHTML.includes("*")==false){
+                flightnumbers[i].innerHTML+="*"
+            }
+            console.log(flightnumber);
+            break;
+        }
+    }
+
     Array.prototype.forEach.call(bookcodes, function(bookcode){
-        if (bookcode.innerHTML == "O" || bookcode.innerHTML == "Q" || bookcode.innerHTML == "B"){
-            bookcode.innerHTML += " (25%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.25);
+        var showasterisk = false;
+        if (flightnumber.includes("AA")==true){
+            if (bookcode.innerHTML == "O" || bookcode.innerHTML == "Q" || bookcode.innerHTML == "B"){
+                bookcode.innerHTML += " (25%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.25);
+            }
+            else if (bookcode.innerHTML == "N" || bookcode.innerHTML == "S"){
+                bookcode.innerHTML += " (50%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.5);
+            }
+            else if (bookcode.innerHTML == "G" || bookcode.innerHTML == "V"){
+                bookcode.innerHTML += " (75%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.75);
+            }
+            else if (bookcode.innerHTML == "H" || bookcode.innerHTML == "K" || bookcode.innerHTML == "L" || bookcode.innerHTML == "M" || bookcode.innerHTML == "Y" || bookcode.innerHTML == "P"){
+                bookcode.innerHTML += " (100%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1);
+            }
+            else if (bookcode.innerHTML == "W"){
+                bookcode.innerHTML += " (110%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.1);
+            }
+            else if (bookcode.innerHTML == "D" || bookcode.innerHTML == "I" || bookcode.innerHTML == "R" || bookcode.innerHTML == "A"){
+                bookcode.innerHTML += " (150%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.5);
+            }
+            else if (bookcode.innerHTML == "J" || bookcode.innerHTML == "F"){
+                bookcode.innerHTML += " (200%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],2.0);
+            }
+            else if (bookcode.innerHTML.length==1 && bookcode.innerHTML.match(/[a-z]/i)){
+                bookcode.innerHTML += " (0%)*<br>AS EQMs Earned: 0*";
+                showasterisk = true;
+            }
         }
-        else if (bookcode.innerHTML == "N" || bookcode.innerHTML == "S"){
-            bookcode.innerHTML += " (50%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.5);
+        else if (flightnumber.includes("*")==false){
+            bookcode.innerHTML += " (0%)*<br>AS EQMs Earned: 0*";
+            showasterisk = true;
         }
-        else if (bookcode.innerHTML == "G" || bookcode.innerHTML == "V"){
-            bookcode.innerHTML += " (75%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.75);
-        }
-        else if (bookcode.innerHTML == "H" || bookcode.innerHTML == "K" || bookcode.innerHTML == "L" || bookcode.innerHTML == "M" || bookcode.innerHTML == "Y" || bookcode.innerHTML == "P"){
-            bookcode.innerHTML += " (100%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1);
-        }
-        else if (bookcode.innerHTML == "W"){
-            bookcode.innerHTML += " (110%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.1);
-        }
-        else if (bookcode.innerHTML == "D" || bookcode.innerHTML == "I" || bookcode.innerHTML == "R" || bookcode.innerHTML == "A"){
-            bookcode.innerHTML += " (150%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.5);
-        }
-        else if (bookcode.innerHTML == "J" || bookcode.innerHTML == "F"){
-            bookcode.innerHTML += " (200%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],2.0);
+        //print footnote if required
+        if (showasterisk==true){
+            var appproductdet = document.getElementsByTagName("app-product-details");
+            //check if already printed
+            if (appproductdet[0].innerHTML.includes("*Flight number or fare class is not eligible for AS earning")==false){
+                appproductdet[0].innerHTML+='<div _ngcontent-uaj-c51="" class="cell product-divider large-12 ng-star-inserted">&nbsp;</div>'+'<div _ngcontent-uaj-c51="" class="product-item">*Flight number or fare class is not eligible for AS earning<!----></div>'
+            }
         }
     });
 }
