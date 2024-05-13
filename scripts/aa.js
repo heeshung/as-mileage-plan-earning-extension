@@ -144,31 +144,9 @@ function deg2rad(deg) {
 }
 
 function findbookcodes(distances,tabindex){
-    var bookcodesa = document.getElementsByTagName("li");
-    //two versions of AA website
-    for (let i=0; i<bookcodesa.length; i++){
-        if (bookcodesa[i].innerHTML == "Booking code: O" || bookcodesa[i].innerHTML == "Booking code: Q" || bookcodesa[i].innerHTML == "Booking code: B"){
-            bookcodesa[i].innerHTML += " (25%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.25);
-        }
-        else if (bookcodesa[i].innerHTML == "Booking code: N" || bookcodesa[i].innerHTML == "Booking code: S"){
-            bookcodesa[i].innerHTML += " (50%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.5);
-        }
-        else if (bookcodesa[i].innerHTML == "Booking code: G" || bookcodesa[i].innerHTML == "Booking code: V"){
-            bookcodesa[i].innerHTML += " (75%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],0.75);
-        }
-        else if (bookcodesa[i].innerHTML == "Booking code: H" || bookcodesa[i].innerHTML == "Booking code: K" || bookcodesa[i].innerHTML == "Booking code: L" || bookcodesa[i].innerHTML == "Booking code: M" || bookcodesa[i].innerHTML == "Booking code: Y" || bookcodesa[i].innerHTML == "Booking code: P"){
-            bookcodesa[i].innerHTML += " (100%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1);
-        }
-        else if (bookcodesa[i].innerHTML == "Booking code: W"){
-            bookcodesa[i].innerHTML += " (110%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.1);
-        }
-        else if (bookcodesa[i].innerHTML == "Booking code: D" || bookcodesa[i].innerHTML == "Booking code: I" || bookcodesa[i].innerHTML == "Booking code: R" || bookcodesa[i].innerHTML == "Booking code: A"){
-            bookcodesa[i].innerHTML += " (150%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],1.5);
-        }
-        else if (bookcodesa[i].innerHTML == "Booking code: J" || bookcodesa[i].innerHTML == "Booking code: F"){
-            bookcodesa[i].innerHTML += " (200%)<br>AS EQMs Earned: " + roundandmult(distances[tabindex],2.0);
-        }
-    }
+    var classlabelexample = document.querySelectorAll("span.class-label");
+    var footnoteattr = classlabelexample[0].getAttributeNames()[0];
+    console.log(footnoteattr);
     var bookcodes = document.getElementsByClassName("booking-code");
     //check if flight has AA flight number
     var flightnumbers = document.getElementsByClassName("flight-number");
@@ -179,7 +157,6 @@ function findbookcodes(distances,tabindex){
             if (flightnumbers[i].innerHTML.includes("AA")==false && flightnumbers[i].innerHTML.includes("*")==false){
                 flightnumbers[i].innerHTML+="*"
             }
-            console.log(flightnumber);
             break;
         }
     }
@@ -222,7 +199,7 @@ function findbookcodes(distances,tabindex){
             var appproductdet = document.getElementsByTagName("app-product-details");
             //check if already printed
             if (appproductdet[0].innerHTML.includes("*Flight number or fare class is not eligible for AS earning")==false){
-                appproductdet[0].innerHTML+='<div _ngcontent-uaj-c51="" class="cell product-divider large-12 ng-star-inserted">&nbsp;</div>'+'<div _ngcontent-uaj-c51="" class="product-item">*Flight number or fare class is not eligible for AS earning<!----></div>'
+                appproductdet[0].innerHTML+='<div _ngcontent-uaj-c51="" class="cell product-divider large-12 ng-star-inserted">&nbsp;</div><div '+footnoteattr+'="" class="product-item">*Flight number or fare class is not eligible for AS earning</div>'
             }
         }
     });
