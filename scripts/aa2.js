@@ -239,10 +239,8 @@ function displayearnings(depiatas,arriatas,distances,farecodes,classes,carriers,
         roundtrip = 1
     }
 
-    var citicarddiv = document.getElementsByClassName("citi");
-    const specialoffer = document.getElementById("watCitiRibbon")
+    var citicarddiv = document.getElementsByClassName("span8");
     citicarddiv[0].innerHTML='';
-    specialoffer.remove();
     var adjusteddistances = [];
 
     let i=0;
