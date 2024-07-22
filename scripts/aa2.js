@@ -138,7 +138,7 @@ function findfarecodes(farecodesraw,classes){
             }
         }
         for (let i=0; i<farecodesfiltered.length; i++){
-            if (classes[i] == "FIR" || classes[i] == "BASIC"){
+            if (classes[i] == "FIR" || classes[i] == "PEC" || classes[i] == "BASIC"){
                 farecodes.push(farecodesfiltered[i][farecodesfiltered[i].length-2])
             }
             else {
