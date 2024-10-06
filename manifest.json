@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Alaska Airlines EQM Estimator",
   "description": "Displays expected Alaska Airlines EQM earnings on partner websites.",
-  "version": "1.2.3",
+  "version": "1.2.4.1",
   "web_accessible_resources": [
     {
         "resources": ["airports/airports.json"],
