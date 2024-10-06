@@ -27,7 +27,7 @@ setInterval(() => {
     }
 
     catch{
-        return 1;
+       return 1;
     }
 },2000);
 
@@ -136,7 +136,7 @@ function findbookcodes(depiatas,arriatas,distances){
     var asteriskprinted = false;
 
     //search middle page
-    var middle_p = document.querySelectorAll("[data-test-flight-details]");
+    var middle_p = document.querySelectorAll('[data-testid="itinenary-timeline-flight-details"]');
 
     for (let i=0;i<middle_p.length;i++){
         //check not already modified
