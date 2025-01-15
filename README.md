@@ -1,5 +1,7 @@
 # Alaska Airlines EQM Estimator
 
+**Update: Extension is deprecated as of 2025 due to new Mileage Plan earning scheme.**
+
 Make a more informed choice when shopping for flights on Alaska Airlines' partners.  We show you the expected EQMs earned from each itinerary, taking things like distance, fare classes, and more into account.  This Chrome extension seamlessly displays expected EQM earnings on Alaska Airlines' Mileage Plan when browsing partner airlines' websites.
 
 
